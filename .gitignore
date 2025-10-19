@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor backups
+*~
+
+# Data / outputs (ignore generated Excel outputs)
+*.xlsx
+*.xls
+forecast_output.xlsx
+forecast_summary.xlsx
+ml_forecast_output.xlsx
+
+# Logs
+*.log
