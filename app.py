@@ -8,10 +8,6 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import xgboost as xgb
 import lightgbm as lgb
 from statsmodels.tsa.arima.model import ARIMA
-from prophet import Prophet
-import tensorflow as tf
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
 import xlsxwriter
 import warnings
 warnings.filterwarnings("ignore")
@@ -62,15 +58,15 @@ def forecast_arima(df):
     y_pred = model.predict(start=0, end=len(df)-1)
     return forecast_df, y_pred
 
-def forecast_prophet(df):
-    df_prophet = df[['timestamp', 'volume']].rename(columns={'timestamp': 'ds', 'volume': 'y'})
-    model = Prophet()
-    model.fit(df_prophet)
-    future = model.make_future_dataframe(periods=24, freq='MS')
-    forecast = model.predict(future)
-    forecast_df = forecast[['ds', 'yhat']].tail(24)
-    y_pred = model.predict(df_prophet)[['yhat']]
-    return forecast_df, y_pred['yhat']
+# def forecast_prophet(df):
+#     df_prophet = df[['timestamp', 'volume']].rename(columns={'timestamp': 'ds', 'volume': 'y'})
+#     model = Prophet()
+#     model.fit(df_prophet)
+#     future = model.make_future_dataframe(periods=24, freq='MS')
+#     forecast = model.predict(future)
+#     forecast_df = forecast[['ds', 'yhat']].tail(24)
+#     y_pred = model.predict(df_prophet)[['yhat']]
+#     return forecast_df, y_pred['yhat']
 
 def forecast_rf(df):
     X = df[['month_num', 'month', 'year', 'quarter']]
@@ -155,13 +151,13 @@ uploaded_file = st.file_uploader("Upload CSV", type="csv")
 if uploaded_file:
     df = load_data(uploaded_file)
     models = {
-        'ARIMA': (forecast_arima, 'short-term, interpretable'),
-        'Prophet': (forecast_prophet, 'multi-product, seasonal'),
-        'Random Forest': (forecast_rf, 'short-term, interpretable'),
-        'XGBoost': (forecast_xgb, 'high accuracy, nonlinear'),
-        'LightGBM': (forecast_lgb, 'high accuracy, nonlinear'),
-        'LSTM': (forecast_lstm, 'complex, long-term sequences')
+    'ARIMA': (forecast_arima, 'short-term, interpretable'),
+    # 'Prophet': (forecast_prophet, 'multi-product, seasonal'),
+    'Random Forest': (forecast_rf, 'short-term, interpretable'),
+    'XGBoost': (forecast_xgb, 'high accuracy, nonlinear'),
+    'LightGBM': (forecast_lgb, 'high accuracy, nonlinear')
     }
+
 
     results = {}
     for name, (func, category) in models.items():

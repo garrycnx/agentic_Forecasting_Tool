@@ -6,5 +6,4 @@ scikit-learn
 xgboost
 lightgbm
 statsmodels
-prophet==1.1.5
 xlsxwriter
