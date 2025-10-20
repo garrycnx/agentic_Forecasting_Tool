@@ -217,3 +217,5 @@ if uploaded_file:
         st.download_button("📥 Download Forecast Excel", f, "forecast_summary.xlsx")
 
     st.success("✅ Forecast complete. Models ranked by RMSE in the summary sheet.")
+
+
